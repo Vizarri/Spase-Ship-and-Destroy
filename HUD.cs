@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-// Класс отвечающий за вывод на экран количества столкновений
+// РљР»Р°СЃСЃ РѕС‚РІРµС‡Р°СЋС‰РёР№ Р·Р° РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ РєРѕР»РёС‡РµСЃС‚РІР° СЃС‚РѕР»РєРЅРѕРІРµРЅРёР№
 
 public class HUD : MonoBehaviour
 {
@@ -22,11 +22,5 @@ public class HUD : MonoBehaviour
     void Start()
     {
         textOutput.text = collision.ToString();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
