@@ -6,12 +6,14 @@ using UnityEngine;
 // Скрипт , при помощи которого игровой объект может двигаться по осям x и y при помощи нажатия клавишь и если сталкивается с рамками камеры у него 
 // отнимается 10 жизней и иконка становится менее яркой , когда жизни =0 , игровой объект уничтожается.
 
-public class Bou : MonoBehaviour
+public class Bounce : MonoBehaviour
 {
+    //Поля
     float Speed = 10f;
     private Rigidbody2D _rb;
     float Health = 100;
     Color color;
+    HUD hud;
 
 
     // метод отвечающий за движение RigidBody
@@ -33,15 +35,18 @@ public class Bou : MonoBehaviour
         }
     }
 
-    // метод обнаружения столкновения и взрыв объекта
+    // метод обнаружения и подсчета столкновений+ взрыв объекта
     void OnCollisionEnter2D(Collision2D myCollision)
     {
-        // определение столкновения с двумя разноименными объектами
+        // определение столкновения с двумя разноименными объектами и отнимает "Здоровье" и уменьшает цвет. Также ведет подсчет hud++ при столкновении.
         if (myCollision.gameObject.CompareTag("MainCamera"))
         {
             Health -= 10;
             color.a -= 0.1f;
             gameObject.GetComponent<SpriteRenderer>().color = color;
+            HUD hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>();
+            hud.AddBounce();
+
         }
         // взрывв если здоровье <=0
         if (Health <= 0)
@@ -54,13 +59,14 @@ public class Bou : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Инициализация полей
         _rb = GetComponent<Rigidbody2D>();
-        color = gameObject.GetComponent<SpriteRenderer>().color;
+        color = gameObject.GetComponent<SpriteRenderer>().color;     
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        MovementLogic();  
+        MovementLogic();
     }
 }
