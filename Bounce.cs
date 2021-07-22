@@ -14,6 +14,7 @@ public class Bounce : MonoBehaviour
     float Health = 100;
     Color color;
     HUD hud;
+    AudioSource audioSource;
 
 
     // метод отвечающий за движение RigidBody
@@ -38,7 +39,7 @@ public class Bounce : MonoBehaviour
     // метод обнаружения и подсчета столкновений+ взрыв объекта
     void OnCollisionEnter2D(Collision2D myCollision)
     {
-        // определение столкновения с двумя разноименными объектами и отнимает "Здоровье" и уменьшает цвет. Также ведет подсчет hud++ при столкновении.
+       // определение столкновения с двумя разноименными объектами и отнимает "Здоровье" и уменьшает цвет. Также ведет подсчет hud++ при столкновении и вызывает звуковой эффект.
         if (myCollision.gameObject.CompareTag("MainCamera"))
         {
             Health -= 10;
@@ -46,6 +47,7 @@ public class Bounce : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().color = color;
             HUD hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>();
             hud.AddBounce();
+            audioSource.Play();
 
         }
         // взрывв если здоровье <=0
@@ -61,7 +63,8 @@ public class Bounce : MonoBehaviour
     {
         //Инициализация полей
         _rb = GetComponent<Rigidbody2D>();
-        color = gameObject.GetComponent<SpriteRenderer>().color;     
+        color = gameObject.GetComponent<SpriteRenderer>().color; 
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
